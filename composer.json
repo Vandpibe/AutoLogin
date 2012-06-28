@@ -1,0 +1,25 @@
+{
+    "name" : "vandpibe/auto-login",
+    "type" : "library",
+    "description" : "Autogenerates auto-login urls based on User information.",
+    "license" : "MIT",
+    "authors" : [{
+        "name" : "Henrik Bjornskov",
+        "email" : "henrik@bjrnskov.dk"
+    }],
+    "autoload" : {
+        "psr-0" : {
+            "Vandpibe\\AutoLogin" : "lib"
+        }
+    },
+    "require" : {
+        "php"                : ">=5.3.3",
+        "jmikola/auto-login" : "dev-master",
+        "symfony/security"   : "2.1.*"
+    },
+    "require-dev" : {
+        "silex/silex" : "dev-master",
+        "cilex/cilex" : "dev-master",
+        "twig/twig"   : "dev-master"
+    }
+}

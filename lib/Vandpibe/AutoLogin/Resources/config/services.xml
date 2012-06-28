@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="vandpibe.auto_login.generator.class">Vandpibe\AutoLogin\Generator</parameter>
+        <parameter key="vandpibe.auto_login.hasher.class">Vandpibe\AutoLogin\Hasher</parameter>
+        <parameter key="vandpibe.auto_login.twig.auto_login_extension.class">Vandpibe\AutoLogin\Twig\AutoLoginExtension</parameter>
+    </parameters>
+
+    <services>
+        <service id="vandpibe.auto_login.hasher" class="%vandpibe.auto_login.hasher.class%">
+            <!-- MUST be replace by a shared secret that can be used to validate the query -->
+            <argument />
+        </service>
+
+        <service id="vandpibe.auto_login.generator" class="%vandpibe.auto_login.generator.class%">
+            <argument type="service" id="vandpibe.auto_login.hasher" />
+        </service>
+
+        <service id="vandpibe.auto_login.twig.auto_login_extension" class="%vandpibe.auto_login.twig.auto_login_extension.class%">
+            <tag name="twig.extension" />
+
+            <argument type="service" id="vandpibe.auto_login.generator" />
+            <argument type="service" id="router" />
+        </service>
+    </services>
+</container>
