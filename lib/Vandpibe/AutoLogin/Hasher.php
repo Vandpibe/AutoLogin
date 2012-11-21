@@ -36,7 +36,7 @@ class Hasher implements HasherInterface
     {
         // Helps to make sure the parameters are in the correct order no matter what order
         // they are given to the method.
-        asort($parameters);
+        ksort($parameters);
 
         return hash_hmac('sha1', http_build_query($parameters), $this->secret);
     }
