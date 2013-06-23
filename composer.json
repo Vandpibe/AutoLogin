@@ -15,7 +15,7 @@
 
     "require" : {
         "php"                : ">=5.3.3",
-        "jmikola/auto-login" : "dev-master",
+        "jmikola/auto-login" : "1.0.*",
         "symfony/security"   : "~2.2"
     },
 
