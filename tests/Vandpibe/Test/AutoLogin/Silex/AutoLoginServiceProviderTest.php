@@ -42,13 +42,19 @@ class AutoLoginServiceProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testRegisterTwigExtensionIfAvaiable()
     {
-        $this->application['twig'] = $this->getMock('Twig_Environment');
-        $this->application['twig']
+        $twig = $this->getMock('Twig_Environment');
+        $twig
             ->expects($this->once())
             ->method('addExtension')
         ;
 
+        $this->application['twig'] = function () use ($twig) {
+            return $twig;
+        };
+
         $this->provider->register($this->application);
+
+        $this->application['twig'];
 
         $this->assertInstanceof('Vandpibe\AutoLogin\Twig\AutoLoginExtension', $this->application['vandpibe.auto_login.twig.auto_login']);
     }

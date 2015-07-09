@@ -41,7 +41,11 @@ class AutoLoginServiceProvider implements \Silex\ServiceProviderInterface
                 return new AutoLoginExtension($app['vandpibe.auto_login.generator'], $app['url_generator']);
             });
 
-            $app['twig']->addExtension($app['vandpibe.auto_login.twig.auto_login']);
+            $app['twig'] = $app->share($app->extend('twig', function ($twig, $app) {
+                $twig->addExtension($app['vandpibe.auto_login.twig.auto_login']);
+
+                return $twig;
+            }));
         }
     }
 
