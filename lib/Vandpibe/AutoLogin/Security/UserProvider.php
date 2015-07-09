@@ -14,12 +14,13 @@ namespace Vandpibe\AutoLogin\Security;
 use Jmikola\AutoLogin\Exception\AutoLoginTokenNotFoundException;
 use Jmikola\AutoLogin\User\AutoLoginUserProviderInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Vandpibe\AutoLogin\HasherInterface;
 
 /**
  * @author Henrik Bjornskov <henrik@bjrnskov.dk>
  */
-class UserProvider implements AutoLoginUserProviderInterface
+class UserProvider implements AutoLoginUserProviderInterface, UserProviderInterface
 {
     /**
      * @var UserProviderInterface
@@ -40,6 +41,21 @@ class UserProvider implements AutoLoginUserProviderInterface
         $this->hasher = $hasher;
     }
 
+    public function loadUserByUsername($username)
+    {
+        return $this->provider->loadUserByUsername($username);
+    }
+
+    public function refreshUser(UserInterface $user)
+    {
+        $this->provider->refreshUser($user);
+    }
+
+    public function supportsClass($class)
+    {
+        return $this->provider->supportsClass($class);
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -53,7 +69,7 @@ class UserProvider implements AutoLoginUserProviderInterface
         parse_str(base64_decode($key));
 
         if (time() < $expireAt && $hash == $this->hasher->hash(compact('username', 'expireAt'))) {
-            return $this->provider->loadUserByUsername($username);
+            return $this->loadUserByUsername($username);
         }
 
         throw new AutoLoginTokenNotFoundException('"$key" contains invalid information.');
