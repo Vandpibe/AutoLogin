@@ -48,7 +48,7 @@ class UserProvider implements AutoLoginUserProviderInterface, UserProviderInterf
 
     public function refreshUser(UserInterface $user)
     {
-        $this->provider->refreshUser($user);
+        return $this->provider->refreshUser($user);
     }
 
     public function supportsClass($class)
