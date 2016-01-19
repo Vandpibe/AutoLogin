@@ -15,6 +15,7 @@ use Jmikola\AutoLogin\Exception\AutoLoginTokenNotFoundException;
 use Jmikola\AutoLogin\User\AutoLoginUserProviderInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Vandpibe\AutoLogin\Generator;
 use Vandpibe\AutoLogin\HasherInterface;
 
 /**
@@ -66,7 +67,8 @@ class UserProvider implements AutoLoginUserProviderInterface, UserProviderInterf
         $username = null;
 
         // Parse the query string
-        parse_str(base64_decode($key));
+        parse_str(Generator::base64url_decode($key));
+//        parse_str(str_pad(strtr($key, '-_', '+/'), strlen($key) % 4, '=', STR_PAD_RIGHT));
 
         if (time() < $expireAt && $hash == $this->hasher->hash(compact('username', 'expireAt'))) {
             return $this->loadUserByUsername($username);

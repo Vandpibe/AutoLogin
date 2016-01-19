@@ -45,6 +45,14 @@ class Generator implements GeneratorInterface
 
         $parameters['hash'] = $this->hasher->hash($parameters);
 
-        return base64_encode(http_build_query($parameters));
+        return self::base64url_encode(http_build_query($parameters));
+    }
+
+    public static function base64url_encode($data) {
+        return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
+    }
+
+    public static function base64url_decode($data) {
+        return base64_decode(str_pad(strtr($data, '-_', '+/'), strlen($data) % 4, '=', STR_PAD_RIGHT));
     }
 }

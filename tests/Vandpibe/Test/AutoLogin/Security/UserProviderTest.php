@@ -11,6 +11,7 @@
 
 namespace Vandpibe\Test\AutoLogin\Security;
 
+use Vandpibe\AutoLogin\Generator;
 use Vandpibe\AutoLogin\Security\UserProvider;
 
 /**
@@ -37,7 +38,7 @@ class UserProviderTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue('evenmoreinvalid'))
         ;
 
-        $this->provider->loadUserByAutoLoginToken(base64_encode('username=henrik&expireAt=' . self::VALID_EXPIRE_AT . '&hash=invalid'));
+        $this->provider->loadUserByAutoLoginToken(Generator::base64url_encode('username=henrik&expireAt=' . self::VALID_EXPIRE_AT . '&hash=invalid'));
     }
 
     public function testDontCallUserProviderWhenExpireAtIsInvalid()
@@ -55,7 +56,7 @@ class UserProviderTest extends \PHPUnit_Framework_TestCase
             ->method('loadUserByUsername')
         ;
 
-        $this->provider->loadUserByAutoLoginToken(base64_encode('username=henrik&expireAt=0&hash=invalid'));
+        $this->provider->loadUserByAutoLoginToken(Generator::base64url_encode('username=henrik&expireAt=0&hash=invalid'));
     }
 
     public function testCallUserProviderWhenHashIsValid()
@@ -73,6 +74,6 @@ class UserProviderTest extends \PHPUnit_Framework_TestCase
             ->with($this->equalTo('henrik'))
         ;
 
-        $this->provider->loadUserByAutoLoginToken(base64_encode('username=henrik&expireAt=' . self::VALID_EXPIRE_AT . '&hash=valid'));
+        $this->provider->loadUserByAutoLoginToken(Generator::base64url_encode('username=henrik&expireAt=' . self::VALID_EXPIRE_AT . '&hash=valid'));
     }
 }
