@@ -30,7 +30,8 @@ class UserProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testThrowsExceptionWithInvalidHash()
     {
-        $this->setExpectedException('Jmikola\AutoLogin\Exception\AutoLoginTokenNotFoundException', '"$key" contains invalid information.');
+        $this->setExpectedException('Jmikola\AutoLogin\Exception\AutoLoginTokenNotFoundException',
+            '"$key" contains invalid information.');
 
         $this->hasher
             ->expects($this->once())
@@ -38,13 +39,15 @@ class UserProviderTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue('evenmoreinvalid'))
         ;
 
-        $this->provider->loadUserByAutoLoginToken(Generator::base64url_encode('username=henrik&expireAt=' . self::VALID_EXPIRE_AT . '&hash=invalid'));
+        $this->provider->loadUserByAutoLoginToken(Generator::base64UrlEncode('username=henrik&expireAt=' .
+            self::VALID_EXPIRE_AT . '&hash=invalid'));
     }
 
     public function testDontCallUserProviderWhenExpireAtIsInvalid()
     {
 
-        $this->setExpectedException('Jmikola\AutoLogin\Exception\AutoLoginTokenNotFoundException', '"$key" contains invalid information.');
+        $this->setExpectedException('Jmikola\AutoLogin\Exception\AutoLoginTokenNotFoundException',
+            '"$key" contains invalid information.');
 
         $this->hasher
             ->expects($this->never())
@@ -56,7 +59,7 @@ class UserProviderTest extends \PHPUnit_Framework_TestCase
             ->method('loadUserByUsername')
         ;
 
-        $this->provider->loadUserByAutoLoginToken(Generator::base64url_encode('username=henrik&expireAt=0&hash=invalid'));
+        $this->provider->loadUserByAutoLoginToken(Generator::base64UrlEncode('username=henrik&expireAt=0&hash=invalid'));
     }
 
     public function testCallUserProviderWhenHashIsValid()
@@ -74,6 +77,7 @@ class UserProviderTest extends \PHPUnit_Framework_TestCase
             ->with($this->equalTo('henrik'))
         ;
 
-        $this->provider->loadUserByAutoLoginToken(Generator::base64url_encode('username=henrik&expireAt=' . self::VALID_EXPIRE_AT . '&hash=valid'));
+        $this->provider->loadUserByAutoLoginToken(Generator::base64UrlEncode('username=henrik&expireAt=' .
+            self::VALID_EXPIRE_AT . '&hash=valid'));
     }
 }

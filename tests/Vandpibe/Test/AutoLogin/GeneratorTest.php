@@ -41,7 +41,7 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase
 
         $query = $this->generator->generate($this->user);
 
-        parse_str(Generator::base64url_decode($query));
+        parse_str(Generator::base64UrlDecode($query));
 
         $this->assertEquals('rikkipige', $username);
         $this->assertEquals('rikke-likes-hash', $hash);

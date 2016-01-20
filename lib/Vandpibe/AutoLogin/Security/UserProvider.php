@@ -67,7 +67,7 @@ class UserProvider implements AutoLoginUserProviderInterface, UserProviderInterf
         $username = null;
 
         // Parse the query string
-        parse_str(Generator::base64url_decode($key));
+        parse_str(Generator::base64UrlDecode($key));
 //        parse_str(str_pad(strtr($key, '-_', '+/'), strlen($key) % 4, '=', STR_PAD_RIGHT));
 
         if (time() < $expireAt && $hash == $this->hasher->hash(compact('username', 'expireAt'))) {
